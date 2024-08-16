@@ -16,13 +16,17 @@ export const fetchBestMovies = async () => {
   return data;
 };
 
-const urlMoviesDetails =
-  "https://api.themoviedb.org/3/movie/533535?language=en-US";
-
-export const fetchMoviesDetails = async () => {
-  const { data } = await axios.get(urlMoviesDetails, options);
+export const fetchMoviesDetails = async (movieId) => {
+  const { data } = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, options);
   return data;
 };
+
+// export const fetchMoviesDetails = async (moviedId) => {
+//   const urlMoviesDetails = `https://api.themoviedb.org/3/movie/${moviedId}?language=en-US`;
+
+//   const { data } = await axios.get(urlMoviesDetails, options);
+//   return data;
+// };
 
 // export const fetchBestMovies = axios
 //   .get(urlBestMovies, options)

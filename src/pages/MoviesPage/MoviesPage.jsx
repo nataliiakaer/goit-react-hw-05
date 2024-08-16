@@ -1,11 +1,14 @@
 // import css from "./MoviesPage.module.css";
 
+import MovieList from "../../components/MovieList/MovieList";
+// import MovieDetailsPage from "../MovieDetailsPage/MovieDetailsPage";
+
 const MoviesPage = () => {
   return (
-    <div>
-      
-    </div>
-  )
-}
+    <>
+      <MovieList />
+    </>
+  );
+};
 
-export default MoviesPage
+export default MoviesPage;
