@@ -1,0 +1,18 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.author {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.authorName {
+  color: green;
+}
+
+.textNoReviews {
+  padding: 15px;
+}

@@ -3,64 +3,71 @@ import { fetchMoviesDetails } from "../../movies_api";
 import { Link, Outlet, useParams } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import css from "./MovieDetailsPage.module.css";
+import Loader from "../../components/Loader/Loader";
+
+const defaultImg =
+  "https://dummyimage.com/400x600/cdcdcd/000.jpg&text=No+poster";
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
   const [movieDetail, setMovieDetail] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (!movieId) return;
+
     async function getBestMovies() {
       try {
+        setLoading(true);
         const movies = await fetchMoviesDetails(movieId);
         setMovieDetail(movies);
-        console.log(movies);
       } catch (error) {
-        console.log(error.message);
-        setError(error.message);
+        setError(error);
+      } finally {
+        setLoading(false);
       }
     }
+
     getBestMovies();
   }, [movieId]);
 
   return (
     <>
+      {loading && <Loader />}
+      {error && (
+        <p>
+          Whoops, something went wrong! Please try reloading this page or try
+          again later!
+        </p>
+      )}
       <button className={css.btnGoBack} type="button">
         <FaArrowLeftLong />
         Go back
       </button>
       {movieDetail !== null && (
         <div className={css.sectionMovie}>
-          <img src={movieDetail.poster_path}></img>
-          <h2 className={css.titleMovie}>{movieDetail.title}</h2>
-          <p>User Score: </p>
-          <h3>Overview</h3>
-          <p>{movieDetail.overview}</p>
-          <h3>Genres</h3>
-          <ul className={css.listGenres}>
-            {movieDetail.genres.map((item) => {
-              return <li key={item.id}>{item.name}</li>;
-            })}
-          </ul>
-
-          {/* <ul className={css.listDetails}>
-            <li className={css.itemDetails}> 
-              <h2 className={css.titleMovie}>{movieDetail.title}</h2>
-              <p>User Score: </p>
-            </li>
-            <li className={css.itemDetails}>
-              <h3>Overview</h3>
-              <p>{movieDetail.overview}</p>
-            </li>
-            <li className={css.itemDetails}>
-              <h3>Genres</h3>
-              <ul className={css.listDetails}>
-                {movieDetail.genres.map((item) => {
-                  return <li key={item.id}>{item.name}</li>;
-                })}
-              </ul>
-            </li>
-          </ul> */}
+          <img
+            src={
+              movieDetail.poster_path
+                ? `https://image.tmdb.org/t/p/w500${movieDetail.poster_path}`
+                : defaultImg
+            }
+            width={250}
+            alt="poster"
+          />
+          <div className={css.detailContainer}>
+            <h2 className={css.titleMovie}>{movieDetail.title}</h2>
+            <p>User Score: </p>
+            <h3>Overview</h3>
+            <p>{movieDetail.overview}</p>
+            <h3>Genres</h3>
+            <ul className={css.listGenres}>
+              {movieDetail.genres.map((item) => {
+                return <li key={item.id}>{item.name}</li>;
+              })}
+            </ul>
+          </div>
         </div>
       )}
 
@@ -81,7 +88,6 @@ const MovieDetailsPage = () => {
         </ul>
       </div>
       <Outlet />
-      {error && <p>{error}</p>}
     </>
   );
 };
