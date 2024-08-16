@@ -17,18 +17,33 @@ export const fetchBestMovies = async () => {
 };
 
 export const fetchMoviesDetails = async (movieId) => {
-  const { data } = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, options);
+  const { data } = await axios.get(
+    `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`,
+    options
+  );
   return data;
 };
 
-// export const fetchMoviesDetails = async (moviedId) => {
-//   const urlMoviesDetails = `https://api.themoviedb.org/3/movie/${moviedId}?language=en-US`;
+export const fetchMovieReview = async (movieId) => {
+  const { data } = await axios.get(
+    `https://api.themoviedb.org/3/movie/${movieId}/reviews?language=en-US&page=1`,
+    options
+  );
+  return data;
+};
 
-//   const { data } = await axios.get(urlMoviesDetails, options);
-//   return data;
-// };
+export const fetchMovieCasts = async (movieId) => {
+  const { data } = await axios.get(
+    `https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`,
+    options
+  );
+  return data;
+};
 
-// export const fetchBestMovies = axios
-//   .get(urlBestMovies, options)
-//   .then((response) => console.log(response.data.results))
-//   .catch((err) => console.error(err));
+export const fetchMovieImage = async () => {
+  const { data } = await axios.get(
+    `https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg`,
+    options
+  );
+  return data;
+};

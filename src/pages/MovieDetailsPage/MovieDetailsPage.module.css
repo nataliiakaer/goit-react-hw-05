@@ -1,3 +1,48 @@
-.section {
-  padding: 45px 25px;
+.btnGoBack {
+  padding: 3px;
+  margin: 9px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  background-color: rgb(241, 240, 240);
+  border: 1px solid gray;
+  cursor: pointer;
+}
+
+.sectionMovie {
+  padding: 45px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.listGenres {
+  display: flex;
+  gap: 12px;
+}
+
+.titleMovie {
+  font-size: 24px;
+}
+
+.containerAddInfo {
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+}
+
+.titleAddInfo {
+  padding: 15px;
+}
+
+.listAddInfo {
+  list-style: inside;
+  padding-left: 40px;
+  margin-bottom: 15px;
+}
+
+.linkAddInfo {
+  text-decoration: underline;
+  cursor: pointer;
+  color: blue;
 }

@@ -19,7 +19,6 @@ const MovieList = () => {
   }, []);
 
   return (
-    <section className={css.section}>
     <ul className={css.list}>
       {Array.isArray(bestMovies) &&
         bestMovies.map((movie) => {
@@ -32,7 +31,6 @@ const MovieList = () => {
           );
         })}
     </ul>
-    </section>
   );
 };
 
