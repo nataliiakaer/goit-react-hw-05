@@ -10,14 +10,17 @@ const MovieList = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
+
     async function getBestMovies() {
       try {
-        setLoading(true);
+        setError(null);
         const data = await fetchBestMovies();
         setBestMovies(data.results);
+        setLoading(false);
       } catch (error) {
         setError(error);
-      } finally {
+      }finally {
         setLoading(false);
       }
     }

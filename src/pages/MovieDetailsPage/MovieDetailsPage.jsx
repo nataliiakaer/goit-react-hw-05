@@ -16,78 +16,82 @@ const MovieDetailsPage = () => {
 
   useEffect(() => {
     if (!movieId) return;
+    setLoading(true);
 
-    async function getBestMovies() {
+    async function getMoviesDetails() {
       try {
-        setLoading(true);
+        setError(null);
         const movies = await fetchMoviesDetails(movieId);
         setMovieDetail(movies);
       } catch (error) {
-        setError(error);
+        setError(
+          "Whoops, something went wrong! Please try reloading this page or try again later!"
+        );
+        return error;
       } finally {
         setLoading(false);
       }
     }
 
-    getBestMovies();
+    getMoviesDetails();
   }, [movieId]);
 
   return (
     <>
-      {loading && <Loader />}
-      {error && (
-        <p>
-          Whoops, something went wrong! Please try reloading this page or try
-          again later!
-        </p>
-      )}
       <button className={css.btnGoBack} type="button">
         <FaArrowLeftLong />
         Go back
       </button>
-      {movieDetail !== null && (
-        <div className={css.sectionMovie}>
-          <img
-            src={
-              movieDetail.poster_path
-                ? `https://image.tmdb.org/t/p/w500${movieDetail.poster_path}`
-                : defaultImg
-            }
-            width={250}
-            alt="poster"
-          />
-          <div className={css.detailContainer}>
-            <h2 className={css.titleMovie}>{movieDetail.title}</h2>
-            <p>User Score: </p>
-            <h3>Overview</h3>
-            <p>{movieDetail.overview}</p>
-            <h3>Genres</h3>
-            <ul className={css.listGenres}>
-              {movieDetail.genres.map((item) => {
-                return <li key={item.id}>{item.name}</li>;
-              })}
-            </ul>
-          </div>
-        </div>
+      {loading && <Loader />}
+      {error ? (
+        <p>{error}</p>
+      ) : (
+        movieDetail !== null && (
+          <>
+            <div className={css.sectionMovie}>
+              <img
+                src={
+                  movieDetail.poster_path
+                    ? `https://image.tmdb.org/t/p/w500${movieDetail.poster_path}`
+                    : defaultImg
+                }
+                width={250}
+                alt="poster"
+              />
+              <div className={css.detailContainer}>
+                <h2 className={css.titleMovie}>{movieDetail.title}</h2>
+                <p>User Score: </p>
+                <h3>Overview</h3>
+                <p>{movieDetail.overview}</p>
+                <h3>Genres</h3>
+                <ul className={css.listGenres}>
+                  {movieDetail.genres.map((item) => {
+                    return <li key={item.id}>{item.name}</li>;
+                  })}
+                </ul>
+              </div>
+            </div>
+
+            <div className={css.containerAddInfo}>
+              <p className={css.titleAddInfo}>Additional information</p>
+
+              <ul className={css.listAddInfo}>
+                <li>
+                  <Link to="cast" className={css.linkAddInfo} href="">
+                    Cast
+                  </Link>
+                </li>
+                <li>
+                  <Link to="reviews" className={css.linkAddInfo}>
+                    Reviews
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <Outlet />
+          </>
+        )
       )}
-
-      <div className={css.containerAddInfo}>
-        <p className={css.titleAddInfo}>Additional information</p>
-
-        <ul className={css.listAddInfo}>
-          <li>
-            <Link to="cast" className={css.linkAddInfo} href="">
-              Cast
-            </Link>
-          </li>
-          <li>
-            <Link to="reviews" className={css.linkAddInfo}>
-              Reviews
-            </Link>
-          </li>
-        </ul>
-      </div>
-      <Outlet />
     </>
   );
 };

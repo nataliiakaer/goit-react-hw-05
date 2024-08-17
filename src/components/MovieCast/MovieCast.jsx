@@ -13,22 +13,26 @@ const MovieCast = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  setLoading(true);
+
   useEffect(() => {
     if (!movieId) return;
+    setLoading(true);
 
-    async function getBestMovies() {
+    async function getMoviesCasts() {
       try {
-        setLoading(true);
+        setError(null)
         const moviesCast = await fetchMovieCasts(movieId);
         setCasts(moviesCast.cast);
+        setLoading(false);
       } catch (error) {
-        setError(error);
-      } finally {
+        setError(error.message);
+      }finally {
         setLoading(false);
       }
     }
 
-    getBestMovies();
+      getMoviesCasts();
   }, [movieId]);
 
   return (

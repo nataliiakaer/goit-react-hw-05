@@ -8,35 +8,34 @@ const MovieReviews = () => {
   const { movieId } = useParams();
   const [reviews, setReviews] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     if (!movieId) return;
+    setLoading(true);
 
-    async function getBestMovies() {
+    async function getMoviesReviews() {
       try {
-        setLoading(true);
+        setError(null);
         const moviesCast = await fetchMovieReview(movieId);
         setReviews(moviesCast.results);
+        if (moviesCast.results.length === 0) {
+          setMessage("No reviews");
+        }
+        setLoading(false);
       } catch (error) {
-        setError(error);
+        setError(error.message);
       } finally {
         setLoading(false);
       }
     }
 
-    getBestMovies();
+      getMoviesReviews();
   }, [movieId]);
 
   return (
     <>
-      {loading && <Loader />}
-      {error && (
-        <p>
-          Whoops, something went wrong! Please try reloading this page or try
-          again later!
-        </p>
-      )}
       {Array.isArray(reviews) && reviews.length > 0 ? (
         <section className={css.section}>
           <ul className={css.list}>
@@ -55,8 +54,13 @@ const MovieReviews = () => {
           </ul>
         </section>
       ) : (
-        <p className={css.textNoReviews}>
-          We don&apos;t have any reviews for this film.
+        <p className={css.textNoReviews}>{message}</p>
+      )}
+      {loading && <Loader />}
+      {error !== null && (
+        <p>
+          Whoops, something went wrong! Please try reloading this page or try
+          again later!
         </p>
       )}
     </>

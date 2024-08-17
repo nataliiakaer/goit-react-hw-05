@@ -39,3 +39,11 @@ export const fetchMovieCasts = async (movieId) => {
   );
   return data;
 };
+
+export const fetchSearchMovie = async () => {
+  const { data } = await axios.get(
+    `https://api.themoviedb.org/3/search/movie?include_adult=false&language=en-US&page=1`,
+    options
+  );
+  return data;
+};
