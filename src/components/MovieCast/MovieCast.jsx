@@ -24,10 +24,10 @@ const MovieCast = () => {
         setError(null)
         const moviesCast = await fetchMovieCasts(movieId);
         setCasts(moviesCast.cast);
-        setLoading(false);
+
       } catch (error) {
         setError(error.message);
-      }finally {
+      } finally {
         setLoading(false);
       }
     }

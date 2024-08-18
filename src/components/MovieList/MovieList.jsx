@@ -1,55 +1,27 @@
-import { useEffect, useState } from "react";
-import { fetchBestMovies } from "../../movies_api";
 import css from "./MovieList.module.css";
-import { Link } from "react-router-dom";
-import Loader from "../Loader/Loader";
+import { Link, useLocation } from "react-router-dom";
 
-const MovieList = () => {
-  const [bestMovies, setBestMovies] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
-
-    async function getBestMovies() {
-      try {
-        setError(null);
-        const data = await fetchBestMovies();
-        setBestMovies(data.results);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-      }finally {
-        setLoading(false);
-      }
-    }
-
-    getBestMovies();
-  }, []);
+const MovieList = (movies) => {
+  const location = useLocation();
+  const moviesList = movies.movies;
 
   return (
-    <>
-      {loading && <Loader />}
-      {error && (
-        <p>
-          Whoops, something went wrong! Please try reloading this page or try
-          again later!
-        </p>
-      )}
-      <ul className={css.list}>
-        {Array.isArray(bestMovies) &&
-          bestMovies.map((movie) => {
-            return (
-              <li key={movie.id}>
-                <Link to={`/movies/${movie.id}`} className={css.linkMovvie}>
-                  {movie.original_title}
-                </Link>
-              </li>
-            );
-          })}
-      </ul>
-    </>
+    <ul className={css.list}>
+      {Array.isArray(moviesList) &&
+        moviesList.map((movie) => {
+          return (
+            <li key={movie.id}>
+              <Link
+                state={{ from: location }}
+                to={`/movies/${movie.id}`}
+                className={css.linkMovvie}
+              >
+                {movie.original_title}
+              </Link>
+            </li>
+          );
+        })}
+    </ul>
   );
 };
 

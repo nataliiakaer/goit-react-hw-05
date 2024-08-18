@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fetchMoviesDetails } from "../../movies_api";
-import { Link, Outlet, useParams } from "react-router-dom";
+import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import css from "./MovieDetailsPage.module.css";
 import Loader from "../../components/Loader/Loader";
@@ -13,6 +13,9 @@ const MovieDetailsPage = () => {
   const [movieDetail, setMovieDetail] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
+
+  const backLink = useRef(location.state?.from ?? "/movies");
 
   useEffect(() => {
     if (!movieId) return;
@@ -38,10 +41,10 @@ const MovieDetailsPage = () => {
 
   return (
     <>
-      <button className={css.btnGoBack} type="button">
+      <Link to={backLink.current} className={css.linkGoBack}>
         <FaArrowLeftLong />
         Go back
-      </button>
+      </Link>
       {loading && <Loader />}
       {error ? (
         <p>{error}</p>
@@ -60,7 +63,7 @@ const MovieDetailsPage = () => {
               />
               <div className={css.detailContainer}>
                 <h2 className={css.titleMovie}>{movieDetail.title}</h2>
-                <p>User Score: </p>
+                <p>User Score: {Math.floor(movieDetail.popularity)}%</p>
                 <h3>Overview</h3>
                 <p>{movieDetail.overview}</p>
                 <h3>Genres</h3>

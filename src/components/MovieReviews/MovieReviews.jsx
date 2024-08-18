@@ -21,9 +21,8 @@ const MovieReviews = () => {
         const moviesCast = await fetchMovieReview(movieId);
         setReviews(moviesCast.results);
         if (moviesCast.results.length === 0) {
-          setMessage("No reviews");
+          setMessage("We don't have any reviews for this movie.");
         }
-        setLoading(false);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -31,7 +30,7 @@ const MovieReviews = () => {
       }
     }
 
-      getMoviesReviews();
+    getMoviesReviews();
   }, [movieId]);
 
   return (

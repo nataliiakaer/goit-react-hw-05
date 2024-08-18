@@ -1,4 +1,5 @@
-.btnGoBack {
+.linkGoBack {
+  width: 100px;
   padding: 3px;
   margin: 9px;
   display: flex;
@@ -7,7 +8,10 @@
   gap: 6px;
   background-color: rgb(241, 240, 240);
   border: 1px solid gray;
+  border-radius: 4px;
   cursor: pointer;
+  color: black;
+  text-decoration: none;
 }
 
 .sectionMovie {
