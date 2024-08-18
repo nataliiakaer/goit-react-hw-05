@@ -21,10 +21,9 @@ const MovieCast = () => {
 
     async function getMoviesCasts() {
       try {
-        setError(null)
+        setError(null);
         const moviesCast = await fetchMovieCasts(movieId);
         setCasts(moviesCast.cast);
-
       } catch (error) {
         setError(error.message);
       } finally {
@@ -32,7 +31,7 @@ const MovieCast = () => {
       }
     }
 
-      getMoviesCasts();
+    getMoviesCasts();
   }, [movieId]);
 
   return (

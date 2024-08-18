@@ -10,13 +10,13 @@ const FeedbackSchema = Yup.object().shape({
     .required("Required"),
 });
 
-const MovieSearchForm = () => {
+const MovieSearchForm = ({ onSearch, defaultSearchValue }) => {
   const INITIAL_VALUE = {
-    movieName: "",
+    movieName: defaultSearchValue || "",
   };
 
   const handleSubmit = (values) => {
-    console.log(values);
+    onSearch(values.movieName);
   };
 
   return (
@@ -28,7 +28,7 @@ const MovieSearchForm = () => {
       <Form className={css.form}>
         <div className={css.container}>
           <Field className={css.input} type="text" name="movieName" />
-          <button className={css.btn} type="button">
+          <button className={css.btn} type="submit">
             Search
           </button>
           <ErrorMessage

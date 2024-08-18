@@ -5,7 +5,9 @@ const NotFoundPage = () => {
   return (
     <>
       <div className={css.message}>Not Found Page</div>
-      <Link to="/" className={css.backLink}>Back to the page Home</Link>
+      <Link to="/" className={css.backLink}>
+        Back to the page Home
+      </Link>
     </>
   );
 };
