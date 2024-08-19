@@ -13,7 +13,6 @@ const MovieCast = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  setLoading(true);
 
   useEffect(() => {
     if (!movieId) return;
